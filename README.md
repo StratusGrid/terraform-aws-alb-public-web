@@ -59,6 +59,8 @@ module "alb-public-web" {
       primary_domain_name = prerelease.app.com
       alias_domain_names  = []
       target_group_arn    = module.asg_prerelease_app_com.asg_target_group_id
+      cognito_user_pool_arn       = aws_cognito_user_pool.prerelease.arn
+      cognito_user_pool_domain    = aws_cognito_user_pool_domain.prerelease.id
   }
 
   input_tags = merge(local.common_tags, {})
