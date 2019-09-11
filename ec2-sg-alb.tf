@@ -22,6 +22,17 @@ resource "aws_security_group_rule" "this_alb_egress_to_targets" {
   security_group_id = aws_security_group.this_alb.id
 }
 
+#Needed for Cognito
+resource "aws_security_group_rule" "this_alb_egress_to_internet_https" {
+  type            = "egress"
+  from_port       = 443
+  to_port         = 443
+  protocol        = "tcp"
+  cidr_blocks     = ["0.0.0.0/0"]
+  description     = "Allow alb to internet https"
+
+  security_group_id = aws_security_group.this_alb.id
+}
 
 resource "aws_security_group_rule" "this_alb_http" {
   type                     = "ingress"
