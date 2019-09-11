@@ -12,6 +12,21 @@ variable "site_mappings" {
       target_group_arn    = string
     }
   ))
+  default = {}
+}
+
+variable "site_mappings_auth" {
+  description = "A map of maps for each site active on the ALB which has authentication via cognito. Maximum of 25 site mappings per ALB!."
+  type        = map(object(
+    {
+      primary_domain_name         = string
+      alias_domain_names          = list(string)
+      target_group_arn            = string
+      cognito_user_pool_arn       = string
+      cognito_user_pool_domain    = string
+    }
+  ))
+  default = {}
 }
 
 variable "input_tags" {
