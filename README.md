@@ -28,7 +28,7 @@ Create a default role with permissions for ssm and cloudwatch agent:
 ```
 module "alb-public-web" {
   source  = "GenesisFunction/alb-public-web/aws"
-  version = "1.1.2"
+  version = "1.1.3"
   # source  = "github.com/GenesisFunction/terraform-aws-alb-public-web"
 
   alb_name         = "${var.name_prefix}-app-01${local.name_suffix}"
