@@ -96,7 +96,7 @@ resource "aws_lb_listener_rule" "this_auth" {
 
   condition {
     host_header {
-      values = flatten([var.site_mappings[each.key].primary_domain_name, var.site_mappings[each.key].alias_domain_names])
+      values = flatten([var.site_mappings_auth[each.key].primary_domain_name, var.site_mappings_auth[each.key].alias_domain_names])
     }
   }
 }
