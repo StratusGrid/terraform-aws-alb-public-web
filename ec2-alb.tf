@@ -14,7 +14,7 @@ resource "aws_lb" "this" {
     enabled = true
   }
 
-  tags = merge(var.input_tags, {})
+  tags = local.common_tags
 }
 
 resource "aws_lb_listener" "this_http" {
