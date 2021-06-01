@@ -1,20 +1,21 @@
 resource "aws_lb" "this" {
-  name               = var.alb_name
-  internal           = var.internal_only
+  name = var.alb_name
+  internal = var.internal_only
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.this_alb.id]
+  security_groups = [
+    aws_security_group.this_alb.id]
 
   subnets = var.subnet_ids
 
   enable_deletion_protection = var.enable_deletion_protection
 
   access_logs {
-    bucket  = var.log_bucket_id
-    prefix  = "${var.log_prefix}/${var.alb_name}"
+    bucket = var.log_bucket_id
+    prefix = "${var.log_prefix}/${var.alb_name}"
     enabled = true
   }
 
-  tags = merge(var.input_tags, {})
+  tags = local.common_tags
 }
 
 resource "aws_lb_listener" "this_http" {

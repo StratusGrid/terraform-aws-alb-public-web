@@ -4,7 +4,7 @@ resource "aws_security_group" "this_alb" {
   vpc_id      = var.vpc_id
 
   tags = merge(
-    var.input_tags,
+    local.common_tags,
     {
       "Name" = var.alb_name
     },
