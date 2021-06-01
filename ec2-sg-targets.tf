@@ -12,7 +12,7 @@ resource "aws_security_group" "this_targets" {
   }
 
   tags = merge(
-    local.common_tags,
+    var.input_tags,
     {
       "Name" = "${var.alb_name}-targets"
     },
