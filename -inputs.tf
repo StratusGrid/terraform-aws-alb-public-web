@@ -46,7 +46,7 @@ variable "default_acm_certificate_arn" {
 variable "inbound_sg_rules" {
   description = "Traffic to be allowed in to ALB"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "vpc_id" {
@@ -57,6 +57,7 @@ variable "vpc_id" {
 variable "subnet_ids" {
   description = "IDs of Subnets which the alb should be attached to"
   type        = list(string)
+  default = []
 }
 
 variable "enable_deletion_protection" {
