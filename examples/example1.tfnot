@@ -1,0 +1,39 @@
+module "alb-public-web" {
+  source  = "GenesisFunction/alb-public-web/aws"
+  version = "1.1.5"
+  # source  = "github.com/GenesisFunction/terraform-aws-alb-public-web"
+
+  alb_name         = "${var.name_prefix}-app-01${local.name_suffix}"
+  vpc_id           = module.vpc_app.vpc_id
+  subnet_ids       = module.vpc_app.public_subnets
+  log_bucket_id    = local.log_bucket
+  security_policy  = "ELBSecurityPolicy-TLS-1-2-2017-01"
+
+  default_acm_certificate_arn = data.aws_acm_certificate.this.arn
+
+  #Site mappings which just have a forward action for anything that matches the host header
+  site_mappings = {
+    my-app-com = {
+      primary_domain_name = my.app.com
+      alias_domain_names  = []
+      target_group_arn    = module.asg_my_app_com.asg_target_group_id
+    }
+    other-app-com = {
+      primary_domain_name = other.app.com
+      alias_domain_names  = []
+      target_group_arn    = module.asg_other_app_com.asg_target_group_id
+    }
+  }
+
+  #Site mappings which will also require the user to successfully authenticate with cognito
+  site_mappings_auth = {
+    prerelease-app-com = {
+      primary_domain_name = prerelease.app.com
+      alias_domain_names  = []
+      target_group_arn    = module.asg_prerelease_app_com.asg_target_group_id
+      cognito_user_pool_arn       = aws_cognito_user_pool.prerelease.arn
+      cognito_user_pool_domain    = aws_cognito_user_pool_domain.prerelease.id
+  }
+
+  input_tags = merge(local.common_tags, {})
+}

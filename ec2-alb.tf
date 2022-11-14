@@ -1,11 +1,12 @@
 resource "aws_lb" "this" {
-  name               = var.alb_name
+  name = var.alb_name
+  #tfsec:ignore:aws-elb-alb-not-public
   internal           = var.internal_only
   load_balancer_type = "application"
   security_groups    = [aws_security_group.this_alb.id]
 
-  subnets = var.subnet_ids
-
+  subnets                    = var.subnet_ids
+  drop_invalid_header_fields = true
   enable_deletion_protection = var.enable_deletion_protection
 
   access_logs {
@@ -41,7 +42,7 @@ resource "aws_lb_listener" "this_https" {
   certificate_arn   = var.default_acm_certificate_arn
 
   default_action {
-    type             = "fixed-response"
+    type = "fixed-response"
 
     fixed_response {
       content_type = "text/plain"
