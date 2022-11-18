@@ -5,7 +5,7 @@ variable "alb_name" {
 
 variable "site_mappings" {
   description = "A map of maps for each site active on the ALB. Maximum of 25 site mappings per ALB!."
-  type        = map(object(
+  type = map(object(
     {
       primary_domain_name = string
       alias_domain_names  = list(string)
@@ -17,13 +17,13 @@ variable "site_mappings" {
 
 variable "site_mappings_auth" {
   description = "A map of maps for each site active on the ALB which has authentication via cognito. Maximum of 25 site mappings per ALB!."
-  type        = map(object(
+  type = map(object(
     {
-      primary_domain_name         = string
-      alias_domain_names          = list(string)
-      target_group_arn            = string
-      cognito_user_pool_arn       = string
-      cognito_user_pool_domain    = string
+      primary_domain_name      = string
+      alias_domain_names       = list(string)
+      target_group_arn         = string
+      cognito_user_pool_arn    = string
+      cognito_user_pool_domain = string
     }
   ))
   default = {}
@@ -43,12 +43,6 @@ variable "default_acm_certificate_arn" {
   type        = string
 }
 
-variable "inbound_sg_rules" {
-  description = "Traffic to be allowed in to ALB"
-  type        = string
-  default     = ""
-}
-
 variable "vpc_id" {
   description = "ID of VPC which the resource should be created in"
   type        = string
@@ -57,17 +51,11 @@ variable "vpc_id" {
 variable "subnet_ids" {
   description = "IDs of Subnets which the alb should be attached to"
   type        = list(string)
-  default = []
+  default     = []
 }
 
 variable "enable_deletion_protection" {
   description = "whether or not to enable deletion protection on the ALB. Defaults to true"
-  type        = bool
-  default     = true
-}
-
-variable "access_logs_enabled" {
-  description = "Whether or not to enable access logs. Defaults to true"
   type        = bool
   default     = true
 }
