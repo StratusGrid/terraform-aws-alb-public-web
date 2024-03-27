@@ -1,4 +1,14 @@
 <!-- BEGIN_TF_DOCS -->
+<p align="center">
+  <img src="https://github.com/trevorstr/sg-header/blob/main/stratusgrid-logo-smaller.jpg?raw=true" />
+  <p align="center">
+    <a href="https://stratusgrid.com/book-a-consultation">Contact Us</a> |
+    <a href="https://stratusgrid.com/cloud-cost-optimization-dashboard">Stratusphere FinOps</a> |
+    <a href="https://stratusgrid.com">StratusGrid Home</a> |
+    <a href="https://stratusgrid.com/blog">Blog</a>
+  </p>
+</p>
+
 # terraform-aws-alb-public-web
 GitHub: [StratusGrid/terraform-aws-alb-public-web](https://github.com/StratusGrid/terraform-aws-alb-public-web)
 
@@ -19,7 +29,7 @@ Syntax that supports multiple values in list after merge of: https://github.com/
 More info: https://github.com/terraform-providers/terraform-provider-aws/issues/8126
 Already in code but commented out:
 condition {
-host_header = flatten([var.site_mappings[each.key].primary_domain_name, var.site_mappings[each.key].alias_domain_names])
+  host_header = flatten([var.site_mappings[each.key].primary_domain_name, var.site_mappings[each.key].alias_domain_names])
 }
 
 ## Example

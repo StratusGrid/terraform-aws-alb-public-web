@@ -48,3 +48,5 @@ override.tf.json
 
 .pre-commit-config.yaml
 .prettierignore
+.pre-commit-trivy-cache/*
+.pre-commit-trivy-cache/
