@@ -1,4 +1,0 @@
-[submodule "readme-template"]
-	path = readme-template
-	url = git@github.com:StratusGrid/readme-template.git
-	branch = main
