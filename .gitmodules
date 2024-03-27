@@ -1,3 +1,4 @@
 [submodule "readme-template"]
 	path = readme-template
 	url = git@github.com:StratusGrid/readme-template.git
+	branch = feature/SGINT-909-centralize-header
