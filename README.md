@@ -1,30 +1,41 @@
 <!-- BEGIN_TF_DOCS -->
-# terraform-aws-alb-public-web
-GitHub: [StratusGrid/terraform-aws-alb-public-web](https://github.com/StratusGrid/terraform-aws-alb-public-web)
+<p align="center">                                                                                                                                            
+                                                                                
+  <img src="https://github.com/StratusGrid/terraform-readme-template/blob/main/header/stratusgrid-logo-smaller.jpg?raw=true" />
+  <p align="center">                                                           
+    <a href="https://stratusgrid.com/book-a-consultation">Contact Us Test</a> |                  
+    <a href="https://stratusgrid.com/cloud-cost-optimization-dashboard">Stratusphere FinOps</a> |
+    <a href="https://stratusgrid.com">StratusGrid Home</a> |
+    <a href="https://stratusgrid.com/blog">Blog</a>
+  </p>                    
+</p>
 
-alb-public-web is used to make a load balancer for standard 80/443 traffic which can automatically redirect all traffic to the secure port (443). The module uses a map of maps to be able to define multiple sites behind the same ALB (Maximum of 25!) to help with cost.
-This module also has the ability to add a cognito pool in front of individual sites/applications on a per listener rule basis.
-You must define the target group outside of this ALB module and then add it in your site_mapping. This is to support different combinations of sites/target groups.
-There must also be an already existing, and successfully issued/imported ACM certificate which can be attached to the https ALB listener.
-This module outputs the id of a security group which you can add targets to in order to allow them to be reached by the ALB.
+ # terraform-aws-alb-public-web
+ GitHub: [StratusGrid/terraform-aws-alb-public-web](https://github.com/StratusGrid/terraform-aws-alb-public-web)
 
-SSL Security Policies can be found here: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies
+ alb-public-web is used to make a load balancer for standard 80/443 traffic which can automatically redirect all traffic to the secure port (443). The module uses a map of maps to be able to define multiple sites behind the same ALB (Maximum of 25!) to help with cost.
+ This module also has the ability to add a cognito pool in front of individual sites/applications on a per listener rule basis.
+ You must define the target group outside of this ALB module and then add it in your site_mapping. This is to support different combinations of sites/target groups.
+ There must also be an already existing, and successfully issued/imported ACM certificate which can be attached to the https ALB listener.
+ This module outputs the id of a security group which you can add targets to in order to allow them to be reached by the ALB.
 
-TODO:
-- Support paths by coalescing a default of /* and allowing an override to be passed in as a site_mapping variable?
-- Creating SGs per mapping and then attaching explicitly instead of with a single to support specific port mappings?
+ SSL Security Policies can be found here: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies
 
-After code merges, come and make changes needed to properly support lists of host headers
-Syntax that supports multiple values in list after merge of: https://github.com/terraform-providers/terraform-provider-aws/pull/8268
-More info: https://github.com/terraform-providers/terraform-provider-aws/issues/8126
-Already in code but commented out:
-condition {
-host_header = flatten([var.site_mappings[each.key].primary_domain_name, var.site_mappings[each.key].alias_domain_names])
-}
+ TODO:
+ - Support paths by coalescing a default of /* and allowing an override to be passed in as a site_mapping variable?
+ - Creating SGs per mapping and then attaching explicitly instead of with a single to support specific port mappings?
 
-## Example
-```hcl
-module "alb-public-web" {
+ After code merges, come and make changes needed to properly support lists of host headers
+ Syntax that supports multiple values in list after merge of: https://github.com/terraform-providers/terraform-provider-aws/pull/8268
+ More info: https://github.com/terraform-providers/terraform-provider-aws/issues/8126
+ Already in code but commented out:
+ condition {
+   host_header = flatten([var.site_mappings[each.key].primary_domain_name, var.site_mappings[each.key].alias_domain_names])
+ }
+ 
+ ## Example
+ ```hcl
+ module "alb-public-web" {
   source  = "GenesisFunction/alb-public-web/aws"
   version = "1.1.5"
   # source  = "github.com/GenesisFunction/terraform-aws-alb-public-web"
@@ -63,46 +74,46 @@ module "alb-public-web" {
 
   input_tags = merge(local.common_tags, {})
 }
-```
-## StratusGrid Standards we assume
-- All resource names and name tags shall use `_` and not `-`s
-- The old naming standard for common files such as inputs, outputs, providers, etc was to prefix them with a `-`, this is no longer true as it's not POSIX compliant. Our pre-commit hooks will fail with this old standard.
-- StratusGrid generally follows the TerraForm standards outlined [here](https://www.terraform-best-practices.com/naming)
-## Repo Knowledge
-Repository for Module vmimport
-## Documentation
-This repo is self documenting via Terraform Docs, please see the note at the bottom.
-### `LICENSE`
-This is the standard Apache 2.0 License as defined [here](https://stratusgrid.atlassian.net/wiki/spaces/TK/pages/2121728017/StratusGrid+Terraform+Module+Requirements).
-### `outputs.tf`
-The StratusGrid standard for Terraform Outputs.
-### `README.md`
-It's this file! I'm always updated via TF Docs!
-### `tags.tf`
-The StratusGrid standard for provider/module level tagging. This file contains logic to always merge the repo URL.
-### `variables.tf`
-All variables related to this repo for all facets.
-One day this should be broken up into each file, maybe maybe not.
-### `versions.tf`
-This file contains the required providers and their versions. Providers need to be specified otherwise provider overrides can not be done.
-## Documentation of Misc Config Files
-This section is supposed to outline what the misc configuration files do and what is there purpose
-### `.config/.terraform-docs.yml`
-This file auto generates your `README.md` file.
-### `.github/workflows/pre-commit.yml`
-This file contains the instructions for Github workflows, in specific this file run pre-commit and will allow the PR to pass or fail. This is a safety check and extras for if pre-commit isn't run locally.
-### `examples/*`
-The files in here are used by `.config/terraform-docs.yml` for generating the `README.md`. All files must end in `.tfnot` so Terraform validate doesn't trip on them since they're purely example files.
-### `.gitignore`
-This is your gitignore, and contains a slew of default standards.
----
-## Requirements
+ ```
+ ## StratusGrid Standards we assume
+ - All resource names and name tags shall use `_` and not `-`s
+ - The old naming standard for common files such as inputs, outputs, providers, etc was to prefix them with a `-`, this is no longer true as it's not POSIX compliant. Our pre-commit hooks will fail with this old standard.
+ - StratusGrid generally follows the TerraForm standards outlined [here](https://www.terraform-best-practices.com/naming)
+ ## Repo Knowledge
+ Repository for Module vmimport
+ ## Documentation
+ This repo is self documenting via Terraform Docs, please see the note at the bottom.
+ ### `LICENSE`
+ This is the standard Apache 2.0 License as defined [here](https://stratusgrid.atlassian.net/wiki/spaces/TK/pages/2121728017/StratusGrid+Terraform+Module+Requirements).
+ ### `outputs.tf`
+ The StratusGrid standard for Terraform Outputs.
+ ### `README.md`
+ It's this file! I'm always updated via TF Docs!
+ ### `tags.tf`
+ The StratusGrid standard for provider/module level tagging. This file contains logic to always merge the repo URL.
+ ### `variables.tf`
+ All variables related to this repo for all facets.
+ One day this should be broken up into each file, maybe maybe not.
+ ### `versions.tf`
+ This file contains the required providers and their versions. Providers need to be specified otherwise provider overrides can not be done.
+ ## Documentation of Misc Config Files
+ This section is supposed to outline what the misc configuration files do and what is there purpose
+ ### `.config/.terraform-docs.yml`
+ This file auto generates your `README.md` file.
+ ### `.github/workflows/pre-commit.yml`
+ This file contains the instructions for Github workflows, in specific this file run pre-commit and will allow the PR to pass or fail. This is a safety check and extras for if pre-commit isn't run locally.
+ ### `examples/*`
+ The files in here are used by `.config/terraform-docs.yml` for generating the `README.md`. All files must end in `.tfnot` so Terraform validate doesn't trip on them since they're purely example files.
+ ### `.gitignore`
+ This is your gitignore, and contains a slew of default standards.
+ ---
+ ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.9 |
-## Resources
+ ## Resources
 
 | Name | Type |
 |------|------|
@@ -120,7 +131,7 @@ This is your gitignore, and contains a slew of default standards.
 | [aws_security_group_rule.this_alb_egress_to_targets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.this_alb_http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.this_alb_https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
-## Inputs
+ ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
@@ -136,12 +147,12 @@ This is your gitignore, and contains a slew of default standards.
 | <a name="input_site_mappings_auth"></a> [site\_mappings\_auth](#input\_site\_mappings\_auth) | A map of maps for each site active on the ALB which has authentication via cognito. Maximum of 25 site mappings per ALB!. | <pre>map(object(<br>    {<br>      primary_domain_name      = string<br>      alias_domain_names       = list(string)<br>      target_group_arn         = string<br>      cognito_user_pool_arn    = string<br>      cognito_user_pool_domain = string<br>    }<br>  ))</pre> | `{}` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | IDs of Subnets which the alb should be attached to | `list(string)` | `[]` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | ID of VPC which the resource should be created in | `string` | n/a | yes |
-## Outputs
+ ## Outputs
 
 | Name | Description |
 |------|-------------|
 | <a name="output_alb_dns_name"></a> [alb\_dns\_name](#output\_alb\_dns\_name) | DNS Name of ALB |
 | <a name="output_sg_alb_targets_id"></a> [sg\_alb\_targets\_id](#output\_sg\_alb\_targets\_id) | ID of security group which ALB targets are added to for ALB to have access |
----
-Note, manual changes to the README will be overwritten when the documentation is updated. To update the documentation, run `terraform-docs -c .config/.terraform-docs.yml`
+ ---
+ Note, manual changes to the README will be overwritten when the documentation is updated. To update the documentation, run `terraform-docs -c .config/.terraform-docs.yml`
 <!-- END_TF_DOCS -->
